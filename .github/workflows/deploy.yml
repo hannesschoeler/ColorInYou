@@ -28,5 +28,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps        # oder ftp
           port: 21              # anpassen wenn Hostinger andere Port empfiehlt
-          local-dir: ./build/home/u816752781/domains/hd-digitals.de/public_html   # <-- dein build output
+          local-dir: ./home/   # <-- dein build output
           server-dir: /public_html/
