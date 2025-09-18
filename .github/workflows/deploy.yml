@@ -1,0 +1,32 @@
+name: Build and Deploy to Hostinger
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node (falls benötigt)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install & Build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Deploy via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps        # oder ftp
+          port: 21              # anpassen wenn Hostinger andere Port empfiehlt
+          local-dir: ./build/home/u816752781/domains/hd-digitals.de/public_html   # <-- dein build output
+          server-dir: /public_html/
